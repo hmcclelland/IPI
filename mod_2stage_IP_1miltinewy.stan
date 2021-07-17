@@ -9,19 +9,15 @@ data {
   vector[posts] B0;              
   vector[posts] B1;
   vector[posts] sig;   
-  
-  vector[posts] px_new_hat;
-  vector<lower=0>[posts] px_new_err;
 }
 
 parameters {
-  matrix[n_new, posts] x_new;   
+  matrix[n_new, posts] x_new;   # NB: flat priors
 }
 
 model {
   vector[posts] y_new_hat; 
   for(i in 1:n_new){
-    x_new[i,] ~ normal(px_new_hat, px_new_err);
     y_new_hat = B0 + B1 .* x_new[i,]';
     y_new[i] ~ normal(y_new_hat, sig);
 }
