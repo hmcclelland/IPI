@@ -84,20 +84,11 @@ IPIfunc <- function(X_cal, Y_cal, Y_new, Clev = 95){
   #---------------  IPI: Bayesian     -------------------------
   #-------------------------------------------------------------------------------------------------
   
-  # calibration model priors:
-  pr_B0_mu = mean(Ys)
-  pr_B0_s = 2*sd(Ys)    # NB:  need to check that priors are not strongly informative and reasonable for the data
-  pr_B1_mu = 0          # 
-  pr_B1_s = 2
-  pr_sig = 0.2
-  
-  # priors for new x:
-  px_new_hat <- 0
-  px_new_err <- 50
-  
   # Iterations of MCMC for each step. 
   iters_2S_cal <- 2000
   iters_2S_IP  <- 1000
+  
+  # NB: Priors for all regression parameters and for new x vaklues are flat (sigma is strictly +ve) 
   
   #----------  2 Step model:  Calibration  -------------------------------------
   
