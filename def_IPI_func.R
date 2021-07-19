@@ -85,8 +85,8 @@ IPIfunc <- function(X_cal, Y_cal, Y_new, Clev = 95){
   #-------------------------------------------------------------------------------------------------
   
   # Iterations of MCMC for each step. 
-  iters_2S_cal <- 2000
-  iters_2S_IP  <- 1000
+  iterations_2S_cal <- 2000
+  iterations_2S_IP  <- 1000
   
   # NB: Priors for all regression parameters and for new x vaklues are flat (sigma is strictly +ve) 
   
@@ -95,7 +95,7 @@ IPIfunc <- function(X_cal, Y_cal, Y_new, Clev = 95){
   # pass data to stan and run model
   options(mc.cores = parallel::detectCores())
   fit1 <- sampling(mod_2step_cal, list(n=nCal, x=Xs, y=Ys), 
-                   iter = iters_2S_cal, warmup = floor(iters_2S_cal / 2), chains = 4, control = list(adapt_delta = 0.90, max_treedepth = 10))
+                   iter = iterations_2S_cal, warmup = floor(iterations_2S_cal / 2), chains = 4, control = list(adapt_delta = 0.90, max_treedepth = 10))
   # diagnose
   print(fit1)
   params1 <- extract(fit1)
@@ -121,7 +121,7 @@ IPIfunc <- function(X_cal, Y_cal, Y_new, Clev = 95){
     options(mc.cores = parallel::detectCores())
     fit2 <- sampling(mod_2step_IP, list(n_new=Nnew, y_new = Y_new, posts = n_posts1,
                                         B0 = fitted_B0, B1 = fitted_B1, sig = fitted_sig), 
-                     iter = iters_2S_IP, warmup = floor(iters_2S_IP / 2), chains = 4, control = list(adapt_delta = 0.90, max_treedepth = 10))
+                     iter = iterations_2S_IP, warmup = floor(iterations_2S_IP / 2), chains = 4, control = list(adapt_delta = 0.90, max_treedepth = 10))
     # diagnose
     print(fit2)
     
